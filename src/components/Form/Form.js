@@ -18,19 +18,27 @@ export default function Form(props) {
 
     // ----------------- GETTING USER DATA - FUNCTION ----------------- //
 
+    function clearInputs() {
+        [setCurrSavings, setYearlySavings, setInterest, setDuration].forEach(handler => handler(''));
+    }
+
+    function resetInvestment() {
+        props.getUserInputData('');
+        clearInputs();
+    }
+
     function getUserInput(e) {
         e.preventDefault();
 
         // Creating investment Object Data
         const investmentObj = {
-            'current-savings': currSavings,
-            'yearly-contribution': yearlySavings,
-            'expected-return': interest,
-            duration: duration,
+            'current-savings': +currSavings,
+            'yearly-contribution': +yearlySavings,
+            'expected-return': +interest,
+            duration: +duration,
         };
-
         // Clearing Input Fields
-        [setCurrSavings, setYearlySavings, setInterest, setDuration].forEach(handler => handler(''));
+        clearInputs();
 
         // Passing Investment Data Up to App.js
         props.getUserInputData(investmentObj);
@@ -66,7 +74,7 @@ export default function Form(props) {
                 </p>
             </div>
             <p className={style.actions}>
-                <button type="reset" className={style['button-alt']}>
+                <button onClick={resetInvestment} type="reset" className={style['button-alt']}>
                     Reset
                 </button>
                 <button type="submit" className={style.button}>

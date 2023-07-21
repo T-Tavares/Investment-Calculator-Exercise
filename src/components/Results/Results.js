@@ -1,16 +1,31 @@
 import style from './Results.module.css';
 
 export default function Results(props) {
-    const investmentData = props.passInvestmentData.map(inv => {
+    function convertToPrice(price) {
+        return new Intl.NumberFormat().format(price);
+    }
+
+    const investmentElements = props.passUserInputData.map(inv => {
         return (
-            <tr>
+            <tr key={inv.id}>
                 <td>{inv.year}</td>
-                <td>{inv.savingsEndOfYear}</td>
-                <td>{inv.yearlyInterest}</td>
-                <td>{inv.yearlyContribution}</td>
+                <td>${convertToPrice(inv.savingsEndOfYear)}</td>
+                <td>${convertToPrice(inv.yearlyInterest)}</td>
+                <td>${convertToPrice(inv.yearlyContribution)}</td>
+                <td>${convertToPrice(inv.investedCapital)}</td>
             </tr>
         );
     });
+
+    const message = (
+        <tr>
+            <td colSpan="5">
+                <div className={style.message}>
+                    <h2> Please, Fill the form above with your details so we can calculate your investment for you.</h2>
+                </div>
+            </td>
+        </tr>
+    );
 
     return (
         <table className={style.result}>
@@ -23,16 +38,7 @@ export default function Results(props) {
                     <th>Invested Capital</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>YEAR NUMBER</td>
-                    <td>TOTAL SAVINGS END OF YEAR</td>
-                    <td>INTEREST GAINED IN YEAR</td>
-                    <td>TOTAL INTEREST GAINED</td>
-                    <td>TOTAL INVESTED CAPITAL</td>
-                </tr>
-                {investmentData}
-            </tbody>
+            <tbody>{investmentElements.length > 0 ? investmentElements : message}</tbody>
         </table>
     );
 }

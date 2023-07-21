@@ -5,7 +5,7 @@ import Results from './components/Results/Results';
 import {useState} from 'react';
 
 function App(props) {
-    const [investmentCalc, setInvestmentCalc] = useState('');
+    const [investmentCalc, setInvestmentCalc] = useState([]);
 
     const calculateHandler = userInput => {
         const yearlyData = []; // per-year results
@@ -14,6 +14,7 @@ function App(props) {
         const yearlyContribution = +userInput['yearly-contribution']; // as mentioned: feel free to change the shape...
         const expectedReturn = +userInput['expected-return'] / 100;
         const duration = +userInput['duration'];
+        const investedCapital = currentSavings;
 
         // The below code calculates yearly results (total savings, interest etc)
         for (let i = 0; i < duration; i++) {
@@ -25,11 +26,12 @@ function App(props) {
                 yearlyInterest: yearlyInterest,
                 savingsEndOfYear: currentSavings,
                 yearlyContribution: yearlyContribution,
+                investedCapital: investedCapital,
+                id: `${Math.random()}`.slice(2),
             });
         }
-        // console.log(yearlyData);
-        setInvestmentCalc(yearlyData);
 
+        setInvestmentCalc(yearlyData);
         // do something with yearlyData ...
     };
 
@@ -37,7 +39,8 @@ function App(props) {
         <div>
             <Header />
             <Form getUserInputData={calculateHandler} />
-            <Results passInvestmentData={investmentCalc} />
+            <Results passUserInputData={investmentCalc} />
+            {/* <Results /> */}
             {/* Todo: Show below table conditionally (only once result data is available) */}
             {/* Show fallback text if no data is available */}
         </div>
