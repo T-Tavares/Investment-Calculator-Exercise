@@ -1,44 +1,48 @@
 import style from './Results.module.css';
+import {convertToCurrency} from '../../helpers/helperFunctions';
 
 export default function Results(props) {
-    function convertToPrice(price) {
-        return new Intl.NumberFormat().format(price);
-    }
+    let resultsRender;
 
-    const investmentElements = props.passUserInputData.map(inv => {
-        return (
-            <tr key={inv.id}>
-                <td>{inv.year}</td>
-                <td>${convertToPrice(inv.savingsEndOfYear)}</td>
-                <td>${convertToPrice(inv.yearlyInterest)}</td>
-                <td>${convertToPrice(inv.yearlyContribution)}</td>
-                <td>${convertToPrice(inv.investedCapital)}</td>
+    if (props.passUserInputData === '') {
+        resultsRender = (
+            <tr>
+                <td colSpan="5">
+                    <div className={style.message}>
+                        <h2>
+                            {' '}
+                            Please, Fill the form above with your details so we can calculate your investment for you.
+                        </h2>
+                    </div>
+                </td>
             </tr>
         );
-    });
-
-    const message = (
-        <tr>
-            <td colSpan="5">
-                <div className={style.message}>
-                    <h2> Please, Fill the form above with your details so we can calculate your investment for you.</h2>
-                </div>
-            </td>
-        </tr>
-    );
+    } else {
+        resultsRender = props.passUserInputData.map(inv => {
+            return (
+                <tr key={inv.key}>
+                    <td>{inv.year}</td>
+                    <td>${convertToCurrency(inv.totalContributions)}</td>
+                    <td>${convertToCurrency(inv.interestEarned)}</td>
+                    <td>${convertToCurrency(inv.totalInterestEarned)}</td>
+                    <td>${convertToCurrency(inv.endBalance)}</td>
+                </tr>
+            );
+        });
+    }
 
     return (
         <table className={style.result}>
             <thead>
                 <tr>
                     <th>Year</th>
-                    <th>Total Savings</th>
-                    <th>Interest (Year)</th>
-                    <th>Total Interest</th>
-                    <th>Invested Capital</th>
+                    <th>Total Contributions</th>
+                    <th>Interest Earned</th>
+                    <th>Total Interest Earned</th>
+                    <th>End Balance</th>
                 </tr>
             </thead>
-            <tbody>{investmentElements.length > 0 ? investmentElements : message}</tbody>
+            <tbody>{resultsRender}</tbody>
         </table>
     );
 }

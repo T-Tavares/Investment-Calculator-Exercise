@@ -4,22 +4,28 @@ import {useState} from 'react';
 export default function Form(props) {
     // ---------------------- UseState VARIABLES ---------------------- //
 
-    const [currSavings, setCurrSavings] = useState('');
-    const [yearlySavings, setYearlySavings] = useState('');
-    const [interest, setInterest] = useState('');
-    const [duration, setDuration] = useState('');
+    const [startingAmount, setStartingAmount] = useState(10);
+    const [additionalContributionYearly, setAdditionalContributionYearly] = useState(10);
+    const [rateOfReturn, setRateOfReturn] = useState(10);
+    const [yearsToGrow, setYearsToGrow] = useState(10);
+    /*     const [startingAmount, setStartingAmount] = useState('');
+    const [additionalContributionYearly, setAdditionalContributionYearly] = useState('');
+    const [rateOfReturn, setRateOfReturn] = useState('');
+    const [yearsToGrow, setYearsToGrow] = useState(''); */
 
     // --------------------- USER INPUT HANDLERS ---------------------- //
 
-    const currSavingsHandler = e => setCurrSavings(e.target.value);
-    const yearlySavingsHandler = e => setYearlySavings(e.target.value);
-    const interestHandler = e => setInterest(e.target.value);
-    const durationHandler = e => setDuration(e.target.value);
+    const startingAmountHandler = e => setStartingAmount(e.target.value);
+    const additionalContributionYearlyHandler = e => setAdditionalContributionYearly(e.target.value);
+    const rateOfReturnHandler = e => setRateOfReturn(e.target.value);
+    const yearsToGrowHandler = e => setYearsToGrow(e.target.value);
 
     // ----------------- GETTING USER DATA - FUNCTION ----------------- //
 
     function clearInputs() {
-        [setCurrSavings, setYearlySavings, setInterest, setDuration].forEach(handler => handler(''));
+        [setStartingAmount, setAdditionalContributionYearly, setRateOfReturn, setYearsToGrow].forEach(handler =>
+            handler('')
+        );
     }
 
     function resetInvestment() {
@@ -32,10 +38,10 @@ export default function Form(props) {
 
         // Creating investment Object Data
         const investmentObj = {
-            'current-savings': +currSavings,
-            'yearly-contribution': +yearlySavings,
-            'expected-return': +interest,
-            duration: +duration,
+            startingAmount: +startingAmount,
+            additionalContributionYearly: +additionalContributionYearly,
+            rateOfReturn: +rateOfReturn / 100,
+            yearsToGrow: +yearsToGrow,
         };
         // Clearing Input Fields
         clearInputs();
@@ -50,27 +56,27 @@ export default function Form(props) {
         <form onSubmit={getUserInput} className={style.form}>
             <div className={style['input-group']}>
                 <p>
-                    <label htmlFor="current-savings">Current Savings ($)</label>
-                    <input onChange={currSavingsHandler} value={currSavings} type="number" id="current-savings" />
+                    <label htmlFor="starting-amount">Starting Amount ($)</label>
+                    <input onChange={startingAmountHandler} value={startingAmount} type="number" id="starting-amount" />
                 </p>
                 <p>
-                    <label htmlFor="yearly-contribution">Yearly Savings ($)</label>
+                    <label htmlFor="additional-yearly-contribution">Additional Yearly Contribution ($)</label>
                     <input
-                        onChange={yearlySavingsHandler}
-                        value={yearlySavings}
+                        onChange={additionalContributionYearlyHandler}
+                        value={additionalContributionYearly}
                         type="number"
-                        id="yearly-contribution"
+                        id="additional-yearly-contribution"
                     />
                 </p>
             </div>
             <div className={style['input-group']}>
                 <p>
-                    <label htmlFor="expected-return">Expected Interest (%, per year)</label>
-                    <input onChange={interestHandler} value={interest} type="number" id="expected-return" />
+                    <label htmlFor="rate-of-return">Rate of Return (%, per year)</label>
+                    <input onChange={rateOfReturnHandler} value={rateOfReturn} type="number" id="rate-of-return" />
                 </p>
                 <p>
-                    <label htmlFor="duration">Investment Duration (years)</label>
-                    <input onChange={durationHandler} value={duration} type="number" id="duration" />
+                    <label htmlFor="years-to-grow">Years to Grow</label>
+                    <input onChange={yearsToGrowHandler} value={yearsToGrow} type="number" id="years-to-grow" />
                 </p>
             </div>
             <p className={style.actions}>
