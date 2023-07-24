@@ -4,6 +4,7 @@ import {convertToCurrency} from '../../helpers/helperFunctions';
 export default function Results(props) {
     let resultsRender;
 
+    // Conditionally rendering message when reset  or starting
     if (props.passUserInputData === '') {
         resultsRender = (
             <tr>
@@ -17,6 +18,7 @@ export default function Results(props) {
                 </td>
             </tr>
         );
+        // Conditionally rendering results of investment calculations
     } else {
         resultsRender = props.passUserInputData.map(inv => {
             return (
@@ -30,6 +32,8 @@ export default function Results(props) {
             );
         });
     }
+
+    // ----------------------- COMPONENT RETURN ----------------------- //
 
     return (
         <table className={style.result}>

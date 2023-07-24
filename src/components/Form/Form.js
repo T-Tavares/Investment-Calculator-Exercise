@@ -4,14 +4,10 @@ import {useState} from 'react';
 export default function Form(props) {
     // ---------------------- UseState VARIABLES ---------------------- //
 
-    const [startingAmount, setStartingAmount] = useState(10);
-    const [additionalContributionYearly, setAdditionalContributionYearly] = useState(10);
-    const [rateOfReturn, setRateOfReturn] = useState(10);
-    const [yearsToGrow, setYearsToGrow] = useState(10);
-    /*     const [startingAmount, setStartingAmount] = useState('');
+    const [startingAmount, setStartingAmount] = useState('');
     const [additionalContributionYearly, setAdditionalContributionYearly] = useState('');
     const [rateOfReturn, setRateOfReturn] = useState('');
-    const [yearsToGrow, setYearsToGrow] = useState(''); */
+    const [yearsToGrow, setYearsToGrow] = useState('');
 
     // --------------------- USER INPUT HANDLERS ---------------------- //
 

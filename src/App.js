@@ -1,11 +1,17 @@
 import Form from './components/Form/Form';
 import Header from './components/Header/Header';
 import Results from './components/Results/Results';
+import Credits from './components/Credits/Credits';
+
 import {uniqueID} from './helpers/helperFunctions';
 import {useState} from 'react';
 
 function App(props) {
+    // ---------------------- UseState VARIABLES ---------------------- //
+
     const [investmentCalc, setInvestmentCalc] = useState('');
+
+    // -------------- CALCULATING INVESTMENT FUNCTIONS  --------------- //
 
     function firstYearInvestCalc(data) {
         // Passing non-object up if users reset the calculator
@@ -96,68 +102,20 @@ function App(props) {
         setInvestmentCalc(allYearsDataArr);
     }
 
-    /*     function calculateInvestmentHandler(data) {
-        // ----------- DECONSTRUCTION OF INVESTMENT USER INPUT ------------ //
+    /* Note:
+        I'd rather have my functions in another file to make it more clean and organized
+        However since this is a study exercise and small feature I decided to leave them 
+        on this file.
+    */
 
-        const {startingAmount, additionalContributionYearly, rateOfReturn, yearsToGrow} = data;
-        
-        
-        // Interest Multiplier to make everythig cleaner
-        const interestMultiplier = rateOfReturn / 100;
-
-        // ---------------------- FIRST YEAR SET UP ----------------------- //
-
-        const interestEarned = startingAmount * interestMultiplier; // yearStartingAmount * interestMultiplier
-        const totalInterestEarned = startingAmount * interestMultiplier; // Sum of All interest Earned
-        const endBalance = startingAmount + additionalContributionYearly + totalInterestEarned; // startingAmount + totalContributions + totalInterest
-
-        const firstYear = {
-            year: 1,
-            totalContribution: additionalContributionYearly,
-            interestEarned: interestEarned,
-            totalInterestEarned: totalInterestEarned,
-            endBalance: endBalance,
-        };
-        // First entry of YearlyData Array (First Year)
-        const yearlyData = [firstYear];
-
-        // ----------- CALCULATION OF INVESTMENT EARNINGS LOGIC ----------- //
-      
-            And now we are ready to loop through the amount of years and calculate everything. I used the same logic as the first Year
-            But I break into peaces to make it more readable 
-       
-        for (let i = 0; i < yearsToGrow - 1; i++) {
-            // Breaking Variables to be used for Calculations (For readability)
-            const nextYear = yearlyData[i].year + 1;
-            const yearStartingAmount = yearlyData[i].endBalance;
-            const totalContribution = additionalContributionYearly * nextYear;
-            const interestEarned = yearStartingAmount * interestMultiplier;
-            const totalInterestEarned = yearlyData.map(year => year.interestEarned).reduce((a, b) => a + b);
-            const endBalance = startingAmount + totalContribution + totalInterestEarned;
-
-            // Repeat of firstYear logic but this time linking the values to the previous item on the yearlyData Array
-            const nextYearCalc = {
-                year: nextYear,
-                totalContribution: totalContribution,
-                interestEarned: interestEarned,
-                totalInterestEarned: totalInterestEarned,
-                endBalance: endBalance,
-            };
-
-            // --------- ADDING NEW CALCULATIONS TO YEARLYDATA ARRAY ---------- //
-            yearlyData.push(nextYearCalc);
-        }
-        console.log(yearlyData);
-    } */
+    // ----------------------- COMPONENT RETURN ----------------------- //
 
     return (
         <div>
+            <Credits />
             <Header />
             <Form getUserInputData={calculateInvestmentHandler} />
             <Results passUserInputData={investmentCalc} />
-            {/* <Results /> */}
-            {/* Todo: Show below table conditionally (only once result data is available) */}
-            {/* Show fallback text if no data is available */}
         </div>
     );
 }
